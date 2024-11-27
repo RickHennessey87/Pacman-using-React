@@ -1,0 +1,61 @@
+/* .maze is root that contains entire maze.*/
+.maze {
+    /* Flexbox Layout */
+    display: flex;
+    /* Arranges rows as columns */
+    flex-direction: column;
+    /* centers maze horizontally */
+    align-items: center;
+  }
+  
+  /* Applied to each row of the maze */
+  .maze-row {
+    /* sets each row to Flexbox layout, causes cells to be laid out horizontally */
+    display: flex;
+  }
+/* applied to every cell of the grid */
+  .maze-cell {
+    /* width and height of cells set to 20px each */
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* class represents walls and are colored blue */
+  .wall {
+    background-color: blue;
+  }
+  
+  /* class represents pellets and color is set to black. Positions pellet relative to cell since
+  pellet itself is rendered using the pseudo-element ::after */
+  .pellet {
+    background-color: black;
+    position: relative;
+  }
+  
+  /* Targets the ::after pseudo-element of the pellet class */
+  .pellet::after {
+    /* necessary for pseudo element which creates an empty string */
+    content: '';
+    /* renders size of pellet */
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    /* creates circles for the pellets */
+    border-radius: 50%;
+    /* Positions the pellet dot relative to the nearest positioned ancestor (.pellet cell). */
+    position: absolute;
+    /* Places the pellet in the center of the cell. */
+    top: 7.5px;
+    left: 7.5px;
+  }
+  
+  .power-pellet::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+  }

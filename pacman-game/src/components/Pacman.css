@@ -1,0 +1,11 @@
+.pacman {
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+    border-radius: 50%;
+    /* allows position of Pacman using the top and left values which are controlled dynamically */
+    position: absolute;
+    /* animates pacman's change in position over 0.2 seconds */
+    transition: top 0.2s, left 0.2s;
+
+}
