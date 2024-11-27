@@ -1,0 +1,9 @@
+.game-board {
+    position: relative;
+  }
+  
+  .score-board {
+    margin-top: 20px;
+    font-size: 24px;
+    color: white;
+  }
