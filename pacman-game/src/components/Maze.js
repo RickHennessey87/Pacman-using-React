@@ -1,10 +1,9 @@
 import React from 'react';
 import './Maze.css';
-import { mazeLayout } from '../mazeData';
 
 // Creates the Maze component using the mazeLayout in mazeData.js
 
-const Maze = () => {
+const Maze = ({ maze }) => {
     return (
         // root maze div
         <div className='maze'>
@@ -12,7 +11,7 @@ const Maze = () => {
             {/* renders the maze layout. Iterates over each row of the maze. row represents current row, 
             and rowIndex the index of the row which is used as a unique key.  */}
 
-            {mazeLayout.map((row, rowIndex) => (
+            {maze.map((row, rowIndex) => (
                 <div key={rowIndex} className='maze-row'>
 
                     {/* Iterates over each cell of the current row. cell is the value of the cell, and

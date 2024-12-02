@@ -110,6 +110,16 @@ const GameBoard = () => {
         });
     }, [ghostPositions, pacmanPosition, lives]);
 
+    useEffect(() => {
+        if (lives <= 0) {
+          alert('Game Over!');
+          setLives(3);
+          setScore(0);
+          setMaze(mazeLayout);
+          setPacmanPosition({ x: 1, y: 1 });
+        }
+      }, [lives]);
+
 
     // renders the current state of the game
   return (
