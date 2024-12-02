@@ -16,6 +16,10 @@ const GameBoard = () => {
     const [maze, setMaze] = useState(mazeLayout);
     // Keeps track of player score
     const [score, setScore] = useState(0);
+    // Initializes and keeps track on Pacman's lives
+    const [lives, setLives] = useState(3);
+    // Initializes and keeps track of Ghosts and their movement
+    const [ghostPositions, setGhostPositions] = useState([{ x: 6, y: 3 }]);
 
 
     // used to detect arrow presses in order to move Pacman. 
@@ -71,14 +75,53 @@ const GameBoard = () => {
         return () => clearInterval(interval);
     }, [pacmanPosition, direction, maze, score]);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setGhostPositions((ghosts) => 
+                ghosts.map((ghost) => {
+                    const directions = [
+                        { x: 0, y: -1 },
+                        { x: 0, y: 1 },
+                        { x: -1, y: 0 },
+                        { x: 1, y: 0 },
+                    ];
+                    const randomDirection = directions[Math.floor(Math.random() * directions.length)];
+                    const newX = ghost.x + randomDirection.x;
+                    const newY = ghost.y + randomDirection.y;
+
+                    if (maze[newY][newX] !== 1) {
+                        return { x: newX, y: newY };
+                    }
+                    return ghost;
+                })
+            );
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, [maze]);
+
+    // Check if Pacman touches Ghost
+    useEffect(() => {
+        ghostPositions.forEach((ghost) => {
+            if (ghost.x === pacmanPosition.x && ghost.y === pacmanPosition.y) {
+                setLives(lives - 1);
+                setPacmanPosition({ x: 1, y: 1 });
+            }
+        });
+    }, [ghostPositions, pacmanPosition, lives]);
+
 
     // renders the current state of the game
   return (
     <div className='game-board'>
         <Maze maze={maze} />
         <Pacman position={pacmanPosition} />
-        <Ghost position={ghostPosition} />
-        <div className='score-board'>Score: {score}</div>
+        {ghostPositions.map((ghost, index) => (
+            <Ghost key={index} position={ghost} color="red" />
+        ))}
+        <div className='score-board'>
+            Score: {score} | Lives: {lives}
+        </div>
     </div>
   );
 };
